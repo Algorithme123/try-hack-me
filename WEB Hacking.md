@@ -8,3 +8,10 @@
 L'outil ffuf et la liste de mots sont préinstallés sur l'AttackBox ou peuvent être installés localement en les téléchargeant sur https://github.com/ffuf/ffuf.
 
 Créez un fichier appelé valid_usernames.txt et ajoutez les noms d'utilisateur que vous avez trouvés en utilisant ffuf ; ils seront utilisés dans la tâche 3.</h6>
+
+
+## Brute Force : 
+
+``` ffuf -w valid_usernames.txt:W1,/usr/share/wordlists/SecLists/Passwords/Common-Credentials/10-million-password-list-top-100.txt:W2 -X POST -d "username=W1&password=W2" -H "Content-Type: application/x-www-form-urlencoded" -u http://10.10.184.61/customers/login -fc 200```
+
+<h6> Cette commande ffuf est un peu différente de la précédente dans la tâche 2. Auparavant, nous utilisions le mot-clé FUZZ pour sélectionner l'endroit de la requête où les données des listes de mots seraient insérées, mais comme nous utilisons plusieurs listes de mots, nous devons spécifier notre propre mot-clé FUZZ. Dans le cas présent, nous avons choisi W1 pour notre liste de noms d'utilisateur valides et W2 pour la liste des mots de passe que nous allons essayer. Les listes de mots multiples sont à nouveau spécifiées avec l'argument -w mais séparées par une virgule.  Pour une correspondance positive, nous utilisons l'argument -fc pour vérifier la présence d'un code d'état HTTP autre que 200.</h6>
